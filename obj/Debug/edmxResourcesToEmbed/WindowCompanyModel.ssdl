@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="clients">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="full_name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="phone" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="100" />
+    <Property Name="address" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="registration_date" Type="date" />
+  </EntityType>
+  <EntityType Name="employees">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="full_name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="position" Type="varchar" MaxLength="20" />
+    <Property Name="phone" Type="varchar" MaxLength="20" />
+    <Property Name="hire_date" Type="date" />
+  </EntityType>
+  <EntityType Name="order_items">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="order_id" Type="int" Nullable="false" />
+    <Property Name="product_id" Type="int" Nullable="false" />
+    <Property Name="quantity" Type="int" Nullable="false" />
+    <Property Name="unit_price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="order_statuses">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="status_name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="orders">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="client_id" Type="int" Nullable="false" />
+    <Property Name="manager_id" Type="int" Nullable="false" />
+    <Property Name="surveyor_id" Type="int" />
+    <Property Name="installer_id" Type="int" />
+    <Property Name="order_date" Type="date" />
+    <Property Name="planned_install_date" Type="date" />
+    <Property Name="actual_install_date" Type="date" />
+    <Property Name="total_price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="status_id" Type="int" />
+    <Property Name="comment" Type="text" />
+  </EntityType>
+  <EntityType Name="products">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="profile_type" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="glass_unit_type" Type="varchar" MaxLength="50" />
+    <Property Name="width_cm" Type="int" Nullable="false" />
+    <Property Name="height_cm" Type="int" Nullable="false" />
+    <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__order_ite__order__4CA06362">
+    <End Role="orders" Type="Self.orders" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="order_items" Type="Self.order_items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="orders">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="order_items">
+        <PropertyRef Name="order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__order_ite__produ__4D94879B">
+    <End Role="products" Type="Self.products" Multiplicity="1" />
+    <End Role="order_items" Type="Self.order_items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="products">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="order_items">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__client_i__44FF419A">
+    <End Role="clients" Type="Self.clients" Multiplicity="1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clients">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="client_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__installe__47DBAE45">
+    <End Role="employees" Type="Self.employees" Multiplicity="0..1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employees">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="installer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__manager___45F365D3">
+    <End Role="employees" Type="Self.employees" Multiplicity="1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employees">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="manager_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__status_i__48CFD27E">
+    <End Role="order_statuses" Type="Self.order_statuses" Multiplicity="0..1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="order_statuses">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="status_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__surveyor__46E78A0C">
+    <End Role="employees" Type="Self.employees" Multiplicity="0..1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employees">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="surveyor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище ModelContainer">
+    <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="employees" EntityType="Self.employees" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="order_items" EntityType="Self.order_items" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="order_statuses" EntityType="Self.order_statuses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__order_ite__order__4CA06362" Association="Self.FK__order_ite__order__4CA06362">
+      <End Role="orders" EntitySet="orders" />
+      <End Role="order_items" EntitySet="order_items" />
+    </AssociationSet>
+    <AssociationSet Name="FK__order_ite__produ__4D94879B" Association="Self.FK__order_ite__produ__4D94879B">
+      <End Role="products" EntitySet="products" />
+      <End Role="order_items" EntitySet="order_items" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__client_i__44FF419A" Association="Self.FK__orders__client_i__44FF419A">
+      <End Role="clients" EntitySet="clients" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__installe__47DBAE45" Association="Self.FK__orders__installe__47DBAE45">
+      <End Role="employees" EntitySet="employees" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__manager___45F365D3" Association="Self.FK__orders__manager___45F365D3">
+      <End Role="employees" EntitySet="employees" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__status_i__48CFD27E" Association="Self.FK__orders__status_i__48CFD27E">
+      <End Role="order_statuses" EntitySet="order_statuses" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__surveyor__46E78A0C" Association="Self.FK__orders__surveyor__46E78A0C">
+      <End Role="employees" EntitySet="employees" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
