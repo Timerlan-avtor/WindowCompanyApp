@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d5d20a7a79314a1ca6240e63e512ac9f" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.clients" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.employees" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.order_items" Width="1.5" PointX="5.25" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.order_statuses" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.orders" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.products" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.sysdiagrams" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK__orders__client_i__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__orders__installe__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__orders__manager___45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__orders__surveyor__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__order_ite__order__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__order_ite__produ__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__orders__status_i__48CFD27E" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,21 @@
+﻿<Page x:Class="WindowCompanyApp.ClientsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Клиенты">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="📋 Список клиентов" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+
+        <!-- Добавляем TextBlock для отладки -->
+        <TextBlock x:Name="DebugText" Grid.Row="1" Foreground="Red" FontSize="12" Margin="0,0,0,10"/>
+
+        <DataGrid x:Name="dgClients" Grid.Row="2" AutoGenerateColumns="True" 
+                  IsReadOnly="True" Margin="0,5" AlternatingRowBackground="LightGray"/>
+    </Grid>
+</Page>
